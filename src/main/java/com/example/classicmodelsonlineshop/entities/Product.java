@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @NamedQueries({
@@ -31,4 +32,6 @@ public class Product {
     private BigDecimal buyPrice;
     private BigDecimal msrp;
 
+    @OneToMany(mappedBy = "productCode")
+    private List<OrderDetail> orderDetails;
 }

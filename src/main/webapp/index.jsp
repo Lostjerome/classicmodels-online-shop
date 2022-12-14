@@ -32,6 +32,13 @@
         padding-right: 5px;
         display: none;
     }
+
+    .order-card {
+        border: 1px deepskyblue solid;
+        border-radius: 12px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
 </style>
 <script>
     function loadOffice(officeCode) {
@@ -54,6 +61,17 @@
             document.getElementById("body-content").innerHTML = xhttp.responseText;
         }
         xhttp.open("GET", "product-list?page=" + page + "&pageSize=" + pageSize);
+        xhttp.send();
+    }
+
+    function loadOrderHistory(){
+        setLoading("on");
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
+            setLoading("off");
+            document.getElementById("body-content").innerHTML = xhttp.responseText;
+        }
+        xhttp.open("GET", "order-history");
         xhttp.send();
     }
 
@@ -168,7 +186,7 @@
                     <a class="nav-link" href="javascript:loadProduct(1,15)">Product</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)">Order History</a>
+                    <a class="nav-link" href="javascript:loadOrderHistory()">Order History</a>
                 </li>
                 <li class="nav-item ml-4">
                     <a id="login-menu" class="nav-link text-light"
