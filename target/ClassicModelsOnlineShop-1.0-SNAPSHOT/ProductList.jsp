@@ -44,9 +44,7 @@
             </c:when>
             <c:otherwise>
                 <%--                <a href="product-list?page=${vs.count}&pageSize=${pageSize}">--%>
-                <div class="px-1 mx-1 div-link"
-                     onclick="loadProduct(page=${vs.count}, ${pageSize})"
-                >
+                <div class="px-1 mx-1 div-link" onclick="loadProduct(page=${vs.count}, ${pageSize})">
                         ${vs.count}
                 </div>
                 <%--                </a>--%>
@@ -58,7 +56,7 @@
     </div>
     <div class="px-4 mx-1">
         items per page:
-        <select id="itemsPage" onchange="loadProduct(1)">
+        <select id="itemsPage" onchange="loadProduct(page)">
             <option value="5" ${pageSize==5?'selected':''}>5</option>
             <option value="10" ${pageSize==10?'selected':''}>10</option>
             <option value="15" ${pageSize==15?'selected':''}>15</option>

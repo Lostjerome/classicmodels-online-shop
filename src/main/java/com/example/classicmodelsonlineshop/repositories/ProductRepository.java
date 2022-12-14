@@ -15,12 +15,12 @@ public class ProductRepository {
         return PAGE_SIZE;
     }
 
-    public List<Product> findAll(int page) {
-        return findAll(page, PAGE_SIZE);
-    }
-
     public Product find(String productCode) {
         return getEntityManager().find(Product.class, productCode);
+    }
+
+    public List<Product> findAll(int page) {
+        return findAll(page, PAGE_SIZE);
     }
 
     public List<Product> findAll(int page, int pageSize) {

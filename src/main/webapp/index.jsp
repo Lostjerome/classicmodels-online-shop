@@ -53,9 +53,41 @@
             setLoading("off");
             document.getElementById("body-content").innerHTML = xhttp.responseText;
         }
-        xhttp.open("GET", "product-list?page=" + page + "&pageSize-" + pageSize);
+        xhttp.open("GET", "product-list?page=" + page + "&pageSize=" + pageSize);
         xhttp.send();
     }
+
+    function addToCart(productCode) {
+        setLoading('on')
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
+            setLoading('off')
+            cartInfo = document.getElementById("noOfItemInCart");
+            noOfItem = xhttp.responseText;
+
+            if (noOfItem > 0) {
+                cartInfo.style.display = 'inline';
+            } else {
+                cartInfo.style.display = 'none'
+            }
+            cartInfo.innerHTML = noOfItem;
+        }
+        xhttp.open("GET", "add-to-cart?productCode=" + productCode);
+        xhttp.send();
+    }
+
+    function viewCart() {
+        setLoading('on')
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
+            setLoading('off');
+            document.getElementById("view-cart").innerHTML = xhttp.responseText;
+            $('#viewCartModal').modal('show');
+        }
+        xhttp.open("GET", "ViewCart.jsp");
+        xhttp.send();
+    }
+
 
     function setLoading(on_off) {
         let loading = document.getElementById("loading");
@@ -67,6 +99,58 @@
             loading.classList.add("d-none");
         }
     }
+
+    function showLoginForm() {
+        let menu = document.getElementById("login-menu").innerHTML;
+        if (menu.includes('Logout')) {
+            logout();
+        } else {
+            $('#modalLoginForm').modal('show');
+        }
+    }
+
+    function logout() {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
+            location.reload();
+
+        }
+        xhttp.open("GET", "logout");
+        xhttp.send();
+    }
+
+    function login(userName, password) {
+        if (userName == '' || password == '' || userName == undefined) {
+            document.getElementById("login-message").innerHTML = "Invalid user name or password !!!";
+        }
+        setLoading('on')
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
+            setLoading('off');
+            if (xhttp.status == 200) {
+                $('#modalLoginForm').modal('hide');
+                document.getElementById("login-menu").innerHTML = "<i class='bi bi-box-arrow-left'></i> Logout"
+            } else if (xhttp.status > 400) {
+                document.getElementById("login-message").innerHTML = xhttp.statusText;
+            } else {
+                document.getElementById("login-message").innerHTML = "Wrong user name or password !!!";
+            }
+        }
+        let urlEncodedData = "", urlEncodedDataPairs = [];
+        urlEncodedDataPairs.push(encodeURIComponent("userName") + '=' + encodeURIComponent(userName));
+        urlEncodedDataPairs.push(encodeURIComponent("password") + '=' + encodeURIComponent(password));
+        urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
+        xhttp.open("POST", "login");
+        xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhttp.send(urlEncodedData);
+    }
+
+    // after reload page
+    $(document).ready(function () {
+        addToCart()
+    });
+
+
 </script>
 
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -87,7 +171,8 @@
                     <a class="nav-link" href="javascript:void(0)">Order History</a>
                 </li>
                 <li class="nav-item ml-4">
-                    <a id="login-menu" class="nav-link text-light" href="javascript:showLoginForm()"><i
+                    <a id="login-menu" class="nav-link text-light"
+                       href="javascript:showLoginForm()"><i
                             class="bi bi-box-arrow-in-right"></i> Login</a>
                 </li>
             </ul>
@@ -102,11 +187,25 @@
         </div>
     </div>
 </nav>
+<div class="modal" tabindex="-1" id="viewCartModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title">Your Cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="$('#viewCartModal').modal('hide')"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="view-cart"><p>Modal body text goes here.</p></div>
+        </div>
+    </div>
+</div>
+
 <div class="container" id="body-content">
     <jsp:include page="assets/home-info.html"/>
 </div>
 <div class="d-flex justify-content-center modal d-none" id="loading">
     <div class="spinner-border text-primary" style="margin-top: 10%; width: 6rem; height: 6rem;"></div>
 </div>
+<jsp:include page="login-form.html"/>
+
 </body>
 </html>

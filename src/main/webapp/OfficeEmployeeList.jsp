@@ -14,37 +14,33 @@
 <%--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>--%>
 <%--</head>--%>
 <%--<body>--%>
-<title>Classic Model Offices</title>
+<%--<title>Classic Model Offices</title>--%>
 <%--<div class="container">--%>
-    <div class="row bg-primary">
-        <h1>Classic Model Offices</h1>
-    </div>
-    <div class="row">
-        <c:forEach items="${offices}" var="office">
-            <div onclick="loadOffice('${office.officeCode}')" class="col-2 border border-secondary p-2 m-2 div-link
-             ${office.officeCode == selectedOffice.officeCode ? 'bg-warning' : ''}
-            ">
-                <div>
-<%--                    <a href="office-list?officeCode=${office.officeCode}">--%>
-                            ${office.city}
-<%--                    </a>--%>
-    , ${office.country}
-                </div>
-                <div>${office.phone}</div>
-            </div>
-        </c:forEach>
-    </div>
-    <br>
-    <div class="row bg-light">
-        <b>Employees ::</b>
-    </div>
-    <div class="row">
-        <c:forEach items="${selectedOffice.employees}" var="employee">
-            <div class="col-2 border border-secondary pl-2 m-2 rounded-pill">
-                <div>${employee.firstName} ${employee.lastName} - ${employee.jobTitle}</div>
-            </div>
-        </c:forEach>
-    </div>
+<div class="row bg-primary">
+    <h1>Classic Model Offices</h1>
+</div>
+<div class="row">
+    <c:forEach items="${offices}" var="office">
+        <div onclick="loadOffice('${office.officeCode}')"
+             class="col-2 border border-secondary p-2 m-2 div-link ${office.officeCode == selectedOffice.officeCode ? 'bg-warning' : ''}">
+            <div>${office.city}, ${office.country}</div>
+            <div>${office.phone}</div>
+        </div>
+    </c:forEach>
+</div>
+
+<br>
+
+<div class="row bg-light">
+    <b>Employees ::</b>
+</div>
+<div class="row">
+    <c:forEach items="${selectedOffice.employees}" var="employee">
+        <div class="col-2 border border-secondary pl-2 m-2 rounded-pill">
+            <div>${employee.firstName} ${employee.lastName} - ${employee.jobTitle}</div>
+        </div>
+    </c:forEach>
+</div>
 <%--</div>--%>
 <%--</body>--%>
 <%--</html>--%>

@@ -16,6 +16,7 @@ public class Cart<K, V extends CartItem> {
             map.put(key, value);
         } else {
             item.setQuantity(item.getQuantity() + value.getQuantity());
+            System.out.println("Item quantity increased" + item.getQuantity());
         }
     }
 

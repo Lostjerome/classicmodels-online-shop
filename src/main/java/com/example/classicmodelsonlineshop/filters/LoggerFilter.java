@@ -6,7 +6,8 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
 
-@WebFilter(filterName = "LoggerFilter", urlPatterns = "/*")
+//@WebFilter(filterName = "LoggerFilter", urlPatterns = "/*")
+@WebFilter(filterName = "LoggerFilter")
 public class LoggerFilter implements Filter {
     private FilterConfig config;
 
@@ -26,7 +27,7 @@ public class LoggerFilter implements Filter {
 //        ขาออก
         HttpServletRequest req = (HttpServletRequest) request;
         long duration = System.currentTimeMillis() - before;
-        String msg = "Servlet duration: " + duration + "ms";
+        String msg = "Servlet duration: " + req.getRequestURI() + duration + "ms";
         config.getServletContext().log(msg);
     }
 }

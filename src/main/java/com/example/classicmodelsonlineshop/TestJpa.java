@@ -34,7 +34,7 @@ public class TestJpa {
         int choice = scanner.nextInt();
         switch (choice) {
             case 1:
-                listAllEmployees();
+//                listAllEmployees();
                 break;
             case 2:
 //                findEmployeeById();

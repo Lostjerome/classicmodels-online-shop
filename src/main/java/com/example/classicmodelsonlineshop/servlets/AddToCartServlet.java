@@ -16,19 +16,25 @@ import java.io.IOException;
 @WebServlet(name = "AddToCartServlet", value = "/add-to-cart")
 public class AddToCartServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
         String productCode = req.getParameter("productCode");
         HttpSession session = req.getSession();
-        Cart<String, ClassicModelLineItem> cart = (Cart<String, ClassicModelLineItem>) session.getAttribute("cart");
+        
+        Cart<String, ClassicModelLineItem> cart =
+                (Cart<String, ClassicModelLineItem>) session.getAttribute("cart");
+        
         if (cart == null) {
             cart = new Cart<>();
             session.setAttribute("cart", cart);
         }
+        
         ProductRepository productRepository = new ProductRepository();
         Product product = productRepository.find(productCode);
+        
         if (product != null) {
             cart.addItem(productCode, new ClassicModelLineItem(product));
         }
-        resp.getWriter().println(cart.getNoOfItem());
+        res.getWriter().print(cart.getQuantity());
     }
 }

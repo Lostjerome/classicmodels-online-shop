@@ -31,8 +31,7 @@ public class OfficeRepository {
     public List<Office> findByCityOrCountry(String cityOrCountry) {
         cityOrCountry = cityOrCountry.toLowerCase() + '%';
         Query query = getEntityManager().createNamedQuery("Office.FIND_BY_CITY_OR_COUNTRY");
-        query.setParameter("city", cityOrCountry);
-        query.setParameter("country", cityOrCountry);
+        query.setParameter("cityOrCountry", cityOrCountry);
         return query.getResultList();
     }
 

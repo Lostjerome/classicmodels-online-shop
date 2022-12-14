@@ -14,17 +14,25 @@ import java.util.List;
 @WebServlet(name = "ProductListServlet", value = "/product-list")
 public class ProductListServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
         ProductRepository productRepository = new ProductRepository();
+
         String pageParam = req.getParameter("page");
         String pageSizeParam = req.getParameter("pageSize");
+
         int page = pageParam == null ? 1 : Integer.valueOf(pageParam);
-        int pageSize = pageSizeParam == null ? productRepository.getDefaulPageSize() : Integer.valueOf(pageSizeParam);
+        int pageSize = pageSizeParam == null
+                ? productRepository.getDefaulPageSize()
+                : Integer.valueOf(pageSizeParam);
+
         List<Product> productList = productRepository.findAll(page, pageSize);
-        req.setAttribute("products", productList);
+
         req.setAttribute("page", page);
         req.setAttribute("pageSize", pageSize);
+        req.setAttribute("products", productList);
         req.setAttribute("itemCount", productRepository.countAll());
-        getServletContext().getRequestDispatcher("/ProductList.jsp").forward(req, resp);
+
+        getServletContext().getRequestDispatcher("/ProductList.jsp").forward(req, res);
     }
 }
