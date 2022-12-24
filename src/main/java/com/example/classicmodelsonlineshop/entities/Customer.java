@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,4 +21,9 @@ public class Customer {
     private String contactFirstName;
     private String contactLastName;
     private String password;
+    private String city;
+    private String country;
+
+    @OneToMany(mappedBy = "customerNumber")
+    private List<Order> orders;
 }

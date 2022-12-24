@@ -1,6 +1,5 @@
 package com.example.classicmodelsonlineshop.repositories;
 
-
 import com.example.classicmodelsonlineshop.entities.Order;
 import jakarta.persistence.EntityManager;
 
@@ -14,10 +13,6 @@ public class OrderRepository {
             entityManager = EntityManagerBuilder.getEntityManager();
         }
         return entityManager;
-    }
-
-    public List<Order> findAll() {
-        return getEntityManager().createQuery("SELECT o FROM Order o", Order.class).getResultList();
     }
 
     public Order find(int orderNumber) {

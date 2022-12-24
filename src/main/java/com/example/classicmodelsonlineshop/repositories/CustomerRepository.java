@@ -24,4 +24,11 @@ public class CustomerRepository {
         em.close();
         return customers.size() == 0 ? null : customers.get(0);
     }
+
+    public Customer findByID(int id) {
+        EntityManager em = getEntityManager();
+        Customer customer = em.find(Customer.class, id);
+        em.close();
+        return customer;
+    }
 }
